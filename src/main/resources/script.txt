@@ -1,0 +1,45 @@
+create table if not exists person
+(
+    person_id   bigint generated always as identity,
+    first_name varchar(50) not null,
+    last_name varchar(50) not null,
+    oib char(11) not null,
+    status varchar(25),
+    primary key (person_id)
+);
+
+
+create table if not exists file_entity
+(
+    file_id bigint generated always as identity,
+    file_name varchar(150) not null,
+    payload bytea,
+    status varchar(25),
+    id_person bigint,
+    primary key (file_id),
+    constraint fk_person
+        foreign key (id_person)
+            references person (person_id)
+);
+
+
+insert into person(first_name, last_name, oib, status)
+values ('Ivo', 'Ivic','20129387490','ACTIVE');
+
+insert into person(first_name, last_name, oib, status)
+values ('Marko', 'Markic','98229383420','INACTIVE');
+
+insert into file_entity(file_name, payload ,status,id_person)
+values ('FILE1', null ,'ACTIVE',1);
+
+insert into file_entity(file_name, payload ,status,id_person)
+values ('FILE2', null ,'INACTIVE',1);
+
+insert into file_entity(file_name, payload ,status,id_person)
+values ('FILE3', null ,'ACTIVE',1);
+
+insert into file_entity(file_name, payload ,status,id_person)
+values ('FILE3', null ,'ACTIVE',2);
+
+insert into file_entity(file_name, payload ,status,id_person)
+values ('FILE3', null ,'INACTIVE',2);
